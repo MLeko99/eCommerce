@@ -12,10 +12,42 @@ const productsDOM = document.querySelector(".products-center");
 let cart = [];
 
 // getting the products
-class Products {}
+class Products {
+  async getProducts() {
+    try {
+      let result = await fetch("products.json");
+      let data = await result.json();
+      const { items } = data;
+      return items;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 
 // display products
-class UI {}
+class UI {
+  displayProducts(products) {
+    let result = "";
+    products.forEach((product) => {
+      result += `<article class="product">
+      <div class="img-container">
+        <img
+          src=${product.image_url}
+          alt="product"
+          class="product-img"
+        />
+        <button class="bag-btn" data-id=${product.id}>
+          <i class="bi bi-cart">Add to bag</i>
+        </button>
+      </div>
+      <h3>${product.title}</h3>
+      <h4>${product.price}</h4>
+    </article>`;
+    });
+    productsDOM.innerHTML = result;
+  }
+}
 
 // local storage
 class Storage {}
@@ -23,4 +55,7 @@ class Storage {}
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
+
+  //   get all products
+  products.getProducts().then((products) => ui.displayProducts(products));
 });
