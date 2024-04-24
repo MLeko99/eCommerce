@@ -11,6 +11,8 @@ const productsDOM = document.querySelector(".products-center");
 // cart
 let cart = [];
 
+let buttonsDOM = [];
+
 // getting the products
 class Products {
   async getProducts() {
@@ -49,20 +51,62 @@ class UI {
   }
   getBagButtons() {
     const buttons = [...document.querySelectorAll(".bag-btn")];
+    buttonsDOM = buttons;
     buttons.forEach((button) => {
       let id = button.dataset.id;
       let inCart = cart.find((item) => item.id === id);
       if (inCart) {
         button.innerText = "In Cart";
         button.disabled = true;
-      } else {
-        button.addEventListener("click", (event) => {
-          console.log(event);
-          event.target.innerText = "In Cart";
-          event.target.disabled = true;
-        });
       }
+      button.addEventListener("click", (event) => {
+        event.target.innerText = "In Cart";
+        event.target.disabled = true;
+
+        let cartItem = { ...Storage.getProducts(id), amount: 1 };
+
+        cart = [...cart, cartItem];
+
+        Storage.saveCart(cart);
+
+        this.setCartValues(cart);
+
+        this.addCartItem(cartItem);
+
+        this.showCart();
+      });
     });
+  }
+  setCartValues(cart) {
+    let tempTotal = 0;
+    let itemsTotal = 0;
+
+    cart.map((item) => {
+      tempTotal += item.price * item.amount;
+      itemsTotal += item.amount;
+    });
+    cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
+    cartItems.innerText = itemsTotal;
+  }
+  addCartItem(item) {
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `<img src=${item.image_url} alt="" />
+    <div>
+      <h4>${item.title}</h4>
+      <h5>$${item.price}</h5>
+      <span class="remove-item" data-id=${item.id}>remove</span>
+    </div>
+    <div>
+      <i class="bi bi-chevron-up" data-id=${item.id}></i>
+      <p class="item-amount">${item.amount}</p>
+      <i class="bi bi-chevron-down" data-id=${item.id}></i>
+    </div>`;
+    cartContent.appendChild(div);
+  }
+  showCart() {
+    cartOverlay.classList.add("transparentBcg");
+    cartDOM.classList.add("showCart");
   }
 }
 
@@ -70,6 +114,15 @@ class UI {
 class Storage {
   static saveProducts(products) {
     localStorage.setItem("products", JSON.stringify(products));
+  }
+
+  static getProducts(id) {
+    let products = JSON.parse(localStorage.getItem("products"));
+    return products.find((product) => product.id === id);
+  }
+
+  static saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 }
 
