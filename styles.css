@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
 
+
 :root {
-    --primaryColor: #f09d51;
-    --mainWhite: #fff;
-    --mainBlack: #222;
+    --primaryColor: #2ecc71;
+    --mainWhite: #f2f2f2;
+    --mainBlack: #333333;
     --mainGrey: #ececec;
     --mainSpacing: 0.1rem;
     --mainTransition: all 0.3s linear;
@@ -18,7 +19,7 @@
 body {
     color: var(--mainBlack);
     background: var(--mainWhite);
-    font-family: "Lato", sans-serif;
+    font-family: "Arial", sans-serif;
 }
 
 .navbar {
@@ -28,8 +29,18 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    background: rgb(231, 226, 221);
+    background: var(--mainWhite);
     z-index: 1;
+}
+
+.green {
+    color: var(--primaryColor);
+}
+
+h1 {
+    font-family: Arial, sans-serif;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 .navbar-center {
@@ -81,6 +92,8 @@ body {
     text-transform: uppercase;
     letter-spacing: var(--mainSpacing);
     margin-bottom: 3rem;
+    font-family: "Georgia", serif;
+    color: var(--mainBlack);
 }
 
 .banner-btn {
@@ -100,11 +113,17 @@ body {
     color: var(--primaryColor);
 }
 
+.product h3,
+.product h4 {
+    color: var(--mainBlack);
+}
+
 .products {
     padding: 4rem 0;
 }
 
 .section-title h2 {
+    margin-top: 20px;
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 5rem;
@@ -114,12 +133,13 @@ body {
 
 .products-center {
     width: 90vw;
-    margin: 0 auto;
+    margin: 0 auto 50px;
     max-width: 1170px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     grid-column-gap: 1.5rem;
     grid-row-gap: 2rem;
+    background-color: var(--mainGrey);
 }
 
 .img-container {
@@ -178,6 +198,24 @@ body {
     letter-spacing: var(--mainSpacing);
     color: var(--primaryColor);
     text-align: center;
+}
+
+.footer {
+    background: var(--mainBlack);
+    color: var(--mainWhite);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.social-icons a {
+    color: var(--primaryColor);
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--mainWhite);
 }
 
 .cart-overlay {
@@ -267,8 +305,8 @@ body {
     cursor: pointer;
 }
 
-.fa-chevron-up,
-.fa-chevron-down {
+.bi-chevron-up,
+.bi-chevron-down {
     color: var(--primaryColor);
     cursor: pointer;
 }
